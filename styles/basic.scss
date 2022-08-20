@@ -1,0 +1,16 @@
+@import './modules/header.scss';
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: unset;
+  font-family: var(--f-base);
+  min-height: 100vh;
+}
+
+#app{
+  min-height: 100vh;
+  background-color: var(--c-bg-mute);
+  transition: background-color var(--u-duration);
+}
