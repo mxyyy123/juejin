@@ -1,4 +1,9 @@
 @import './modules/header.scss';
+@import './modules/main_container.scss';
+
+* {
+  transition: border-color var(--u-duration);
+}
 
 html,
 body {
@@ -9,7 +14,7 @@ body {
   min-height: 100vh;
 }
 
-#app{
+#app {
   min-height: 100vh;
   background-color: var(--c-bg-mute);
   transition: background-color var(--u-duration);

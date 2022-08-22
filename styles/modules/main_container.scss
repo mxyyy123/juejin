@@ -1,0 +1,211 @@
+$article-list-width: 700px;
+$sidebar-width: 240px;
+$article-sorter-height: 45px;
+
+.JMainContainer {
+  display: flex;
+  width: 100%;
+  max-width: var(--b-lg);
+  margin: 0 auto;
+  padding-top: calc(var(--l-header-height) + var(--l-sub-header-height) + 16px);
+
+  .JArticleListContainer {
+    flex-grow: 1;
+    background-color: var(--c-bg);
+    border-radius: 3px;
+    transition: background-color var(--u-duration);
+
+    .JArticleSorter {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      height: $article-sorter-height;
+      border-bottom: 1px solid var(--c-divider-light);
+
+      li {
+        list-style: none;
+        vertical-align: middle;
+        font-size: 0.85rem;
+        padding: 0 20px;
+        color: var(--c-text-2);
+        transition: color var(--u-duration);
+        cursor: pointer;
+
+        &:not(:last-child) {
+          border-right: 1px solid var(--c-divider-light);
+        }
+
+        &.active,
+        &:hover {
+          color: var(--c-brand);
+        }
+      }
+    }
+
+    .JArticleList {
+      margin: 0;
+      padding: 0;
+
+      .JArticleItem {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        padding: 12px 20px 0 20px;
+        cursor: pointer;
+
+        .JArticleInfo {
+          display: flex;
+          margin-bottom: 12px;
+
+          .author,
+          .time,
+          .scope {
+            padding: 0 8px;
+            font-size: 0.85rem;
+            color: var(--c-text-2);
+            transition: color var(--u-duration);
+
+            &:first-child {
+              padding-left: 0;
+            }
+
+            &:not(:last-child) {
+              border-right: 1px solid var(--c-divider-light);
+            }
+          }
+        }
+
+        .JArticleDesc {
+          display: flex;
+          margin-bottom: 12px;
+
+          .title {
+            flex-grow: 1;
+
+            a {
+              display: -webkit-box;
+              height: 24px;
+              line-height: 24px;
+              margin-bottom: 12px;
+              font-weight: bold;
+              color: var(--c-text-1);
+              transition: color var(--u-duration);
+              text-decoration: none;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 1;
+            }
+
+            .desc {
+              margin-bottom: 12px;
+              font-size: 0.85rem;
+              color: var(--c-text-2);
+              transition: color var(--u-duration);
+              display: -webkit-box;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 1;
+            }
+
+            .status {
+              .view,
+              .thumb,
+              .comment {
+                display: inline-flex;
+                align-items: center;
+
+                svg {
+                  margin-right: 4px;
+                  height: 16px;
+                  width: 16px;
+                  fill: var(--c-text-2);
+                  transition: fill var(--u-duration);
+                }
+
+                span {
+                  color: var(--c-text-2);
+                  font-size: 0.85rem;
+                  transition: color var(--u-duration);
+                }
+
+                &:not(:last-child) {
+                  margin-right: 16px;
+                }
+              }
+            }
+          }
+
+          .cover {
+            flex-shrink: 0;
+            margin-left: 16px;
+
+            img {
+              height: 80px;
+              width: 120px;
+              border-radius: 3px;
+            }
+          }
+        }
+
+        &:hover {
+          background-color: var(--c-bg-soft);
+        }
+
+        &:not(:last-child) {
+          border-bottom: 1px solid var(--c-divider-light);
+        }
+      }
+    }
+  }
+
+  .JMainSidebar {
+    margin-left: 20px;
+    width: $sidebar-width;
+    flex-shrink: 0;
+
+    .JSignIn {
+      padding: 16px;
+      background-color: var(--c-bg);
+      border-radius: 3px;
+      transition: background-color var(--u-duration);
+
+      .banner {
+        display: flex;
+        align-items: center;
+
+        .hello {
+          margin-left: 8px;
+          color: var(--c-text-1);
+          transition: color var(--u-duration);
+        }
+
+        .signInBtn {
+          margin-left: auto;
+          padding: 4px 12px;
+          border-radius: 100px;
+          border: 1px solid var(--c-brand);
+          font-size: 0.9rem;
+          color: var(--c-brand);
+          cursor: pointer;
+        }
+      }
+
+      .signInText {
+        margin-top: 8px;
+        text-align: center;
+        color: var(--c-text-2);
+        font-size: 0.9rem;
+        transition: color var(--u-duration);
+      }
+    }
+  }
+
+  @media all and (max-width: 960px) {
+    .JMainSidebar {
+      display: none;
+    }
+  }
+}

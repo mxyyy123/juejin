@@ -8,7 +8,8 @@
   </head>
   <body>
     <div id="app">
-      <header class="JHeader">
+      <!-- 导航栏部分 -->
+      <header :class="{ JHeader: true, visible }" x-data="navData">
         <div class="JHeaderContainer">
           <a class="JLogo" href="/">
             <svg
@@ -81,7 +82,7 @@
             </svg>
           </a>
           <nav class="JNav">
-            <ul class="JNavLeft" x-data="navData">
+            <ul class="JNavLeft">
               <!-- Mobile UI -->
               <li
                 :class="{ JNavItem: true, JNavMobileTab: true, isExtra: true, active: true }"
@@ -224,7 +225,165 @@
             </div>
           </nav>
         </div>
+        <div class="JSubHeaderContainer">
+          <ul class="JSubHeader">
+            <template x-for="(item, index) in subNavList" :key="item.label">
+              <li
+                :class="{ JSubHeaderItem: true, active: index === activeSubTab }"
+                x-text="item.label"
+              ></li>
+            </template>
+            <li class="JSubHeaderItem tagManager">标签管理</li>
+          </ul>
+        </div>
       </header>
+      <!-- 主体内容部分 -->
+      <div class="JMainContainer">
+        <!-- 文章列表部分 -->
+        <div class="JArticleListContainer">
+          <!-- 文章分类 -->
+          <ul class="JArticleSorter">
+            <li class="active">推荐</li>
+            <li>最新</li>
+            <li>热榜</li>
+          </ul>
+          <!-- 文章列表 -->
+          <ul class="JArticleList" x-data="articles">
+            <template x-for="(article, index) in articles" :key="index">
+              <li class="JArticleItem">
+                <section class="JArticleInfo">
+                  <div class="author" x-text="article.author"></div>
+                  <div class="time" x-text="article.time"></div>
+                  <div class="scope" x-text="article.scope"></div>
+                </section>
+                <section class="JArticleDesc">
+                  <div class="title">
+                    <a x-text="article.title"></a>
+                    <div class="desc" x-text="article.desc"></div>
+                    <div class="status">
+                      <!-- 浏览数 -->
+                      <div class="view">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M21.92 11.6C19.9 6.91 16.1 4 12 4s-7.9 2.91-9.92 7.6a1 1 0 0 0 0 .8C4.1 17.09 7.9 20 12 20s7.9-2.91 9.92-7.6a1 1 0 0 0 0-.8ZM12 18c-3.17 0-6.17-2.29-7.9-6C5.83 8.29 8.83 6 12 6s6.17 2.29 7.9 6c-1.73 3.71-4.73 6-7.9 6Zm0-10a4 4 0 1 0 4 4a4 4 0 0 0-4-4Zm0 6a2 2 0 1 1 2-2a2 2 0 0 1-2 2Z"
+                          />
+                        </svg>
+                        <span x-text="article.views"></span>
+                      </div>
+                      <!-- 点赞数 -->
+                      <div class="thumb">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M21.3 10.08A3 3 0 0 0 19 9h-4.56L15 7.57A4.13 4.13 0 0 0 11.11 2a1 1 0 0 0-.91.59L7.35 9H5a3 3 0 0 0-3 3v7a3 3 0 0 0 3 3h12.73a3 3 0 0 0 2.95-2.46l1.27-7a3 3 0 0 0-.65-2.46ZM7 20H5a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h2Zm13-7.82l-1.27 7a1 1 0 0 1-1 .82H9v-9.79l2.72-6.12a2.11 2.11 0 0 1 1.38 2.78l-.53 1.43a2 2 0 0 0 1.87 2.7H19a1 1 0 0 1 .77.36a1 1 0 0 1 .23.82Z"
+                          />
+                        </svg>
+                        <span x-text="article.thumbs"></span>
+                      </div>
+                      <!-- 评论数 -->
+                      <div class="comment">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M12 2A10 10 0 0 0 2 12a9.89 9.89 0 0 0 2.26 6.33l-2 2a1 1 0 0 0-.21 1.09A1 1 0 0 0 3 22h9a10 10 0 0 0 0-20Zm0 18H5.41l.93-.93a1 1 0 0 0 0-1.41A8 8 0 1 1 12 20Z"
+                          />
+                        </svg>
+                        <span x-text="article.comments"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <template x-if="article.img">
+                    <div class="cover">
+                      <img :src="article.img" />
+                    </div>
+                  </template>
+                </section>
+              </li>
+            </template>
+          </ul>
+        </div>
+        <!-- 侧边栏部分 -->
+        <div class="JMainSidebar">
+          <section class="JSignIn">
+            <div class="banner">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M8 2C8 1.72386 7.77614 1.5 7.5 1.5H6.5C6.22386 1.5 6 1.72386 6 2L5.9995 3H3C2.44772 3 2 3.47259 2 4.05556V7H22V4.05556C22 3.47259 21.5523 3 21 3H18V2C18 1.72386 17.7761 1.5 17.5 1.5H16.5C16.2239 1.5 16 1.72386 16 2V3H8V2ZM22 8.5H2V20.9444C2 21.5274 2.44772 22 3 22H21C21.5523 22 22 21.5274 22 20.9444V8.5Z"
+                  fill="#FFCF8B"
+                ></path>
+                <rect
+                  x="5"
+                  y="12"
+                  width="3"
+                  height="2"
+                  rx="1"
+                  fill="#FF7D00"
+                ></rect>
+                <rect
+                  x="10.5"
+                  y="12"
+                  width="3"
+                  height="2"
+                  rx="1"
+                  fill="#FF7D00"
+                ></rect>
+                <rect
+                  x="5"
+                  y="16"
+                  width="3"
+                  height="2"
+                  rx="1"
+                  fill="#FF7D00"
+                ></rect>
+                <rect
+                  x="10.5"
+                  y="16"
+                  width="3"
+                  height="2"
+                  rx="1"
+                  fill="#FF7D00"
+                ></rect>
+                <rect
+                  x="16"
+                  y="12"
+                  width="3"
+                  height="2"
+                  rx="1"
+                  fill="#FF7D00"
+                ></rect>
+                <rect
+                  x="16"
+                  y="16"
+                  width="3"
+                  height="2"
+                  rx="1"
+                  fill="#FF7D00"
+                ></rect>
+              </svg>
+              <div class="hello">晚上好！</div>
+              <div class="signInBtn">去签到</div>
+            </div>
+            <div class="signInText">点亮你在社区的每一天</div>
+          </section>
+        </div>
+      </div>
     </div>
     <script type="module" src="/main.js"></script>
   </body>
