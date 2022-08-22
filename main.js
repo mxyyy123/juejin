@@ -3,13 +3,33 @@ import './styles/basic.scss'
 import './styles/colors.scss'
 import './styles/vars.scss'
 
+// Data
+import articles from './data/articles.json'
+
+// Utils
+import { throttle } from './scripts/helpers'
+
 import Alpine from 'alpinejs'
 window.Alpine = Alpine
 
 // 导航栏
 Alpine.data('navData', function () {
   return {
+    init() {
+      let lastScrollTop =
+        window.pageYOffset || document.documentElement.scrollTop
+      const scoller = throttle(() => {
+        const st = window.pageYOffset || document.documentElement.scrollTop
+        this.visible =
+          st === lastScrollTop || st <= 250 ? true : st < lastScrollTop
+        lastScrollTop = st <= 0 ? 0 : st
+      }, 100)
+
+      window.addEventListener('scroll', scoller, false)
+    },
+    visible: true,
     activeTab: 0,
+    activeSubTab: 0,
     showMobilePlate: false,
     navList: [
       {
@@ -55,6 +75,35 @@ Alpine.data('navData', function () {
         link: '/discount',
       },
     ],
+    subNavList: [
+      {
+        label: '综合',
+      },
+      {
+        label: '关注',
+      },
+      {
+        label: '后端',
+      },
+      {
+        label: '前端',
+      },
+      {
+        label: 'IOS',
+      },
+      {
+        label: '人工智能',
+      },
+      {
+        label: '开发工具',
+      },
+      {
+        label: '代码人生',
+      },
+      {
+        label: '阅读',
+      },
+    ],
   }
 })
 
@@ -83,6 +132,12 @@ Alpine.data('searchHistory', function () {
   }
 })
 
+// 文章列表数据
+Alpine.data('articles', function () {
+  return { articles }
+})
+
+//主题色控制
 Alpine.store('darkMode', {
   init() {
     const APPEARANCE_KEY = 'APPEARANCE_KEY'

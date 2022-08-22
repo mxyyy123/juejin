@@ -9,7 +9,7 @@
   <body>
     <div id="app">
       <!-- 导航栏部分 -->
-      <header class="JHeader">
+      <header :class="{ JHeader: true, visible }" x-data="navData">
         <div class="JHeaderContainer">
           <a class="JLogo" href="/">
             <svg
@@ -82,7 +82,7 @@
             </svg>
           </a>
           <nav class="JNav">
-            <ul class="JNavLeft" x-data="navData">
+            <ul class="JNavLeft">
               <!-- Mobile UI -->
               <li
                 :class="{ JNavItem: true, JNavMobileTab: true, isExtra: true, active: true }"
@@ -225,6 +225,17 @@
             </div>
           </nav>
         </div>
+        <div class="JSubHeaderContainer">
+          <ul class="JSubHeader">
+            <template x-for="(item, index) in subNavList" :key="item.label">
+              <li
+                :class="{ JSubHeaderItem: true, active: index === activeSubTab }"
+                x-text="item.label"
+              ></li>
+            </template>
+            <li class="JSubHeaderItem tagManager">标签管理</li>
+          </ul>
+        </div>
       </header>
       <!-- 主体内容部分 -->
       <div class="JMainContainer">
@@ -237,69 +248,66 @@
             <li>热榜</li>
           </ul>
           <!-- 文章列表 -->
-          <ul class="JArticleList">
-            <li class="JArticleItem">
-              <section class="JArticleInfo">
-                <div class="author">稀土军</div>
-                <div class="time">20小时前</div>
-                <div class="scope">前端</div>
-              </section>
-              <section class="JArticleDesc">
-                <div class="title">
-                  <a>Vue3 + TypeScript 开发一个 ProTable</a>
-                  <div class="desc">
-                    第一弹链接欢迎访问哈：Vue3 + ts
-                    开发一个ProTable，这期先实现了目标功能里面的这期先实现了目标功
+          <ul class="JArticleList" x-data="articles">
+            <template x-for="article in articles">
+              <li class="JArticleItem">
+                <section class="JArticleInfo">
+                  <div class="author" x-text="article.author"></div>
+                  <div class="time" x-text="article.time"></div>
+                  <div class="scope" x-text="article.scope"></div>
+                </section>
+                <section class="JArticleDesc">
+                  <div class="title">
+                    <a x-text="article.title"></a>
+                    <div class="desc" x-text="article.desc"></div>
+                    <div class="status">
+                      <!-- 浏览数 -->
+                      <div class="view">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M21.92 11.6C19.9 6.91 16.1 4 12 4s-7.9 2.91-9.92 7.6a1 1 0 0 0 0 .8C4.1 17.09 7.9 20 12 20s7.9-2.91 9.92-7.6a1 1 0 0 0 0-.8ZM12 18c-3.17 0-6.17-2.29-7.9-6C5.83 8.29 8.83 6 12 6s6.17 2.29 7.9 6c-1.73 3.71-4.73 6-7.9 6Zm0-10a4 4 0 1 0 4 4a4 4 0 0 0-4-4Zm0 6a2 2 0 1 1 2-2a2 2 0 0 1-2 2Z"
+                          />
+                        </svg>
+                        <span x-text="article.views"></span>
+                      </div>
+                      <!-- 点赞数 -->
+                      <div class="thumb">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M21.3 10.08A3 3 0 0 0 19 9h-4.56L15 7.57A4.13 4.13 0 0 0 11.11 2a1 1 0 0 0-.91.59L7.35 9H5a3 3 0 0 0-3 3v7a3 3 0 0 0 3 3h12.73a3 3 0 0 0 2.95-2.46l1.27-7a3 3 0 0 0-.65-2.46ZM7 20H5a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h2Zm13-7.82l-1.27 7a1 1 0 0 1-1 .82H9v-9.79l2.72-6.12a2.11 2.11 0 0 1 1.38 2.78l-.53 1.43a2 2 0 0 0 1.87 2.7H19a1 1 0 0 1 .77.36a1 1 0 0 1 .23.82Z"
+                          />
+                        </svg>
+                        <span x-text="article.thumbs"></span>
+                      </div>
+                      <!-- 评论数 -->
+                      <div class="comment">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M12 2A10 10 0 0 0 2 12a9.89 9.89 0 0 0 2.26 6.33l-2 2a1 1 0 0 0-.21 1.09A1 1 0 0 0 3 22h9a10 10 0 0 0 0-20Zm0 18H5.41l.93-.93a1 1 0 0 0 0-1.41A8 8 0 1 1 12 20Z"
+                          />
+                        </svg>
+                        <span x-text="article.comments"></span>
+                      </div>
+                    </div>
                   </div>
-                  <div class="status">
-                    <!-- 浏览数 -->
-                    <div class="view">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M21.92 11.6C19.9 6.91 16.1 4 12 4s-7.9 2.91-9.92 7.6a1 1 0 0 0 0 .8C4.1 17.09 7.9 20 12 20s7.9-2.91 9.92-7.6a1 1 0 0 0 0-.8ZM12 18c-3.17 0-6.17-2.29-7.9-6C5.83 8.29 8.83 6 12 6s6.17 2.29 7.9 6c-1.73 3.71-4.73 6-7.9 6Zm0-10a4 4 0 1 0 4 4a4 4 0 0 0-4-4Zm0 6a2 2 0 1 1 2-2a2 2 0 0 1-2 2Z"
-                        />
-                      </svg>
-                      <span>4576</span>
-                    </div>
-                    <!-- 点赞数 -->
-                    <div class="thumb">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M21.3 10.08A3 3 0 0 0 19 9h-4.56L15 7.57A4.13 4.13 0 0 0 11.11 2a1 1 0 0 0-.91.59L7.35 9H5a3 3 0 0 0-3 3v7a3 3 0 0 0 3 3h12.73a3 3 0 0 0 2.95-2.46l1.27-7a3 3 0 0 0-.65-2.46ZM7 20H5a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h2Zm13-7.82l-1.27 7a1 1 0 0 1-1 .82H9v-9.79l2.72-6.12a2.11 2.11 0 0 1 1.38 2.78l-.53 1.43a2 2 0 0 0 1.87 2.7H19a1 1 0 0 1 .77.36a1 1 0 0 1 .23.82Z"
-                        />
-                      </svg>
-                      <span>34</span>
-                    </div>
-                    <!-- 评论数 -->
-                    <div class="comment">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M12 2A10 10 0 0 0 2 12a9.89 9.89 0 0 0 2.26 6.33l-2 2a1 1 0 0 0-.21 1.09A1 1 0 0 0 3 22h9a10 10 0 0 0 0-20Zm0 18H5.41l.93-.93a1 1 0 0 0 0-1.41A8 8 0 1 1 12 20Z"
-                        />
-                      </svg>
-                      <span>12</span>
-                    </div>
+                  <div class="cover">
+                    <img :src="article.img" />
                   </div>
-                </div>
-                <div class="cover">
-                  <img
-                    src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/909be64572154f79b7228bb691bf896b~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp?"
-                  />
-                </div>
-              </section>
-            </li>
+                </section>
+              </li>
+            </template>
           </ul>
         </div>
         <!-- 侧边栏部分 -->
