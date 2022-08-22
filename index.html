@@ -249,7 +249,7 @@
           </ul>
           <!-- 文章列表 -->
           <ul class="JArticleList" x-data="articles">
-            <template x-for="article in articles">
+            <template x-for="(article, index) in articles" :key="index">
               <li class="JArticleItem">
                 <section class="JArticleInfo">
                   <div class="author" x-text="article.author"></div>
@@ -302,9 +302,11 @@
                       </div>
                     </div>
                   </div>
-                  <div class="cover">
-                    <img :src="article.img" />
-                  </div>
+                  <template x-if="article.img">
+                    <div class="cover">
+                      <img :src="article.img" />
+                    </div>
+                  </template>
                 </section>
               </li>
             </template>

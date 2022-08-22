@@ -5,6 +5,7 @@ import './styles/vars.scss'
 
 // Data
 import articles from './data/articles.json'
+import { mock } from 'mockjs'
 
 // Utils
 import { throttle } from './scripts/helpers'
@@ -134,7 +135,33 @@ Alpine.data('searchHistory', function () {
 
 // 文章列表数据
 Alpine.data('articles', function () {
-  return { articles }
+  return {
+    init() {
+      window.onscroll = () => {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+          const data = mock({
+            // 属性 list 的值是一个数组，其中含有 1 到 10 个元素
+            'mockArticle|10': [
+              {
+                author: '@cword(2, 5)',
+                time: '@integer(1,59)',
+                scope: '@cword(2)',
+                title: '@cword(5, 12)',
+                desc: '@csentence(25, 50)',
+                views: '@integer(100,1000)',
+                thumbs: '@integer(10,500)',
+                comments: '@integer(10,50)',
+                img: '@image("120x80", "@color", "Abc")',
+              },
+            ],
+          })
+
+          this.articles.push(...data.mockArticle)
+        }
+      }
+    },
+    articles,
+  }
 })
 
 //主题色控制
