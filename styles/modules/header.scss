@@ -25,7 +25,7 @@ $add-btn-width: 112px;
   flex-direction: column;
   background-color: var(--c-bg);
   border-bottom: 1px solid var(--c-divider-light);
-  transform: translate3d(0, calc(var(--l-header-height) * -1), 0);
+  transform: translate3d(0, calc(var(--l-header-height) * -1 - 1px), 0);
   transition: background-color var(--u-duration), transform var(--u-duration);
 
   .JHeaderContainer {
